@@ -46,4 +46,12 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * @return mixed
+     */
+    public function getPassword(): mixed
+    {
+        return $this->getAttribute('password');
+    }
 }

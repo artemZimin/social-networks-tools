@@ -21,9 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::prefix('v1')->group(function () {
-    Route::get('/test', function () {
-        return response()->json([
-            'status' => 'ok'
-        ]);
-    });
+    Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
+    Route::post('/auth', [\App\Http\Controllers\AuthController::class, 'auth'])->name('auth');
 });
