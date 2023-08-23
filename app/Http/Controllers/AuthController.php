@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
@@ -29,6 +30,8 @@ class AuthController extends Controller
             'email' => $request->input('email'),
             'password' => $password,
         ]);
+
+        event(new Registered($user));
 
         return Response::json($user->toArray());
     }

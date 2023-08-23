@@ -23,4 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::post('/register', [\App\Http\Controllers\AuthController::class, 'register'])->name('register');
     Route::post('/auth', [\App\Http\Controllers\AuthController::class, 'auth'])->name('auth');
+
+    Route::middleware('auth:sanctum')->group(function () {
+        Route::post('/email/verification-notification', [\App\Http\Controllers\EmailVerificationController::class, 'send'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
+    });
+
+    Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\EmailVerificationController::class, 'verify'])
+        ->middleware('signed')
+        ->name('verification.verify');
 });
