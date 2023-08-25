@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Contracts\Actions\AuthActionContract;
+use App\Contracts\Actions\UserRegisterActionContract;
 use App\Http\Requests\AuthRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Response;
 use Illuminate\Validation\ValidationException;
 
@@ -19,49 +19,28 @@ class AuthController extends Controller
      * Register new user
      *
      * @param RegisterRequest $request
+     * @param UserRegisterActionContract $action
      * @return JsonResponse
      */
-    public function register(RegisterRequest $request): JsonResponse
+    public function register(RegisterRequest $request, UserRegisterActionContract $action): JsonResponse
     {
-        $password = Hash::make($request->input('password'));
+        $user = $action->handle($request);
 
-        $user = User::query()->create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => $password,
-        ]);
-
-        event(new Registered($user));
-
-        return Response::json($user->toArray());
+        return Response::json($user);
     }
 
     /**
-     * User auth
+     * Auth user
      *
      * @param AuthRequest $request
+     * @param AuthActionContract $action
      * @return JsonResponse
      * @throws ValidationException
      */
-    public function auth(AuthRequest $request): JsonResponse
+    public function auth(AuthRequest $request, AuthActionContract $action): JsonResponse
     {
-        $candidate = User::query()
-            ->where('email', $request->input('email'))
-            ->first();
+        $response = $action->handle($request);
 
-        if (
-            $candidate === null || !Hash::check(
-                $request->input('password'),
-                (string)$candidate->getAttribute('password')
-            )
-        ) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
-            ]);
-        }
-
-        return Response::json([
-            'token' => $candidate->createToken($request->getClientIp())->plainTextToken
-        ]);
+        return Response::json($response);
     }
 }
