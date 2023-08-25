@@ -6,8 +6,8 @@ namespace App\Actions;
 
 use App\Contracts\Actions\UserRegisterActionContract;
 use App\Http\Requests\RegisterRequest;
+use App\Jobs\ProcessUserRegistered;
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Hash;
 
 class UserRegisterAction implements UserRegisterActionContract
@@ -26,7 +26,9 @@ class UserRegisterAction implements UserRegisterActionContract
             'password' => $password,
         ]);
 
-        event(new Registered($user));
+        if ($user instanceof User) {
+            ProcessUserRegistered::dispatch($user);
+        }
 
         return $user->toArray();
     }

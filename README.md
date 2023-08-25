@@ -16,7 +16,8 @@
     - ```make build```
   - Вручную
     - ```composer install --ignore-platform-reqs```
-    - ```./vendor/bin/sail up```
+    - ```./vendor/bin/sail up -d```
+    - ```./vendor/bin/sail artisan queue:work```
 
 ### Возможные проблемы:
 - **Class "DOMDocument" not found**
