@@ -31,6 +31,6 @@ Route::prefix('v1')->group(function () {
     });
 
     Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\EmailVerificationController::class, 'verify'])
-        ->middleware('signed')
+        ->middleware(['auth-for-email', 'signed'])
         ->name('verification.verify');
 });
