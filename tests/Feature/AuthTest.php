@@ -13,32 +13,6 @@ class AuthTest extends TestCase
     use DatabaseMigrations;
 
     /**
-     * Send register request
-     *
-     * @param array $data
-     * @return TestResponse
-     */
-    private function registerRequest(array $data): TestResponse
-    {
-        return $this->post(route('register'), $data, [
-            'Accept' => 'application/json'
-        ]);
-    }
-
-    /**
-     * Send auth request
-     *
-     * @param array $data
-     * @return TestResponse
-     */
-    private function authRequest(array $data): TestResponse
-    {
-        return $this->post(route('auth'), $data, [
-            'Accept' => 'application/json'
-        ]);
-    }
-
-    /**
      * Auth
      */
     public function test_auth(): void
@@ -182,6 +156,32 @@ class AuthTest extends TestCase
             'errors' => [
                 'password'
             ]
+        ]);
+    }
+
+    /**
+     * Send register request
+     *
+     * @param array $data
+     * @return TestResponse
+     */
+    private function registerRequest(array $data): TestResponse
+    {
+        return $this->post(route('register'), $data, [
+            'Accept' => 'application/json'
+        ]);
+    }
+
+    /**
+     * Send auth request
+     *
+     * @param array $data
+     * @return TestResponse
+     */
+    private function authRequest(array $data): TestResponse
+    {
+        return $this->post(route('auth'), $data, [
+            'Accept' => 'application/json'
         ]);
     }
 }
