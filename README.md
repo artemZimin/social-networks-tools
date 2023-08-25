@@ -9,14 +9,14 @@
 
 ## Запуск проекта
 
-- Переименовать .env.example в .env
-- Заполнить переменные окружения в .env
-- Установка зависимостей и поднятие docker зависимостей
+- **Переименовать .env.example в .env**
+- **Заполнить переменные окружения в .env**
+- **Установка зависимостей и поднятие docker зависимостей**
   - Используя Makefile:
-    - make build
+    - ```make build```
   - Вручную
-    - composer install --ignore-platform-reqs
-    - ./vendor/bin/sail up
+    - ```composer install --ignore-platform-reqs```
+    - ```./vendor/bin/sail up```
 
 ### Возможные проблемы:
 - **Class "DOMDocument" not found**
