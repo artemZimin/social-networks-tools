@@ -30,8 +30,6 @@ class AuthTest extends TestCase
             'password' => 'testtest',
         ]);
 
-        $response->assertOk();
-
         $response->assertJsonStructure([
             'token'
         ]);

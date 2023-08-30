@@ -28,6 +28,8 @@ Route::prefix('v1')->group(function () {
         Route::post('/email/verification-notification', [\App\Http\Controllers\EmailVerificationController::class, 'send'])
             ->middleware('throttle:6,1')
             ->name('verification.send');
+
+        Route::get('/user', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
     });
 
     Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\EmailVerificationController::class, 'verify'])
