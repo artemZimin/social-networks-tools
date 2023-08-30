@@ -28,6 +28,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmailVerifyActionContract::class, EmailVerifyAction::class);
         $this->app->bind(SendVerificationLinkActionContract::class, SendVerificationLinkAction::class);
         $this->app->bind(ShowUserActionContract::class, ShowUserAction::class);
+
+        if ($this->app->environment('local')) {
+            $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);
+            $this->app->register(TelescopeServiceProvider::class);
+        }
     }
 
     /**
