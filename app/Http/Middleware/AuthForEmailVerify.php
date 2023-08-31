@@ -7,6 +7,7 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use http\Exception\InvalidArgumentException;
+use Illuminate\Contracts\Auth\Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -27,7 +28,9 @@ class AuthForEmailVerify
                 throw new InvalidArgumentException('User not found');
             }
 
-            Auth::login($user);
+            if ($user instanceof Authenticatable) {
+                Auth::login($user);
+            }
         }
 
         return $next($request);

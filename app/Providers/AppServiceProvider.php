@@ -9,11 +9,13 @@ use App\Actions\EmailVerifyAction;
 use App\Actions\SendVerificationLinkAction;
 use App\Actions\ShowUserAction;
 use App\Actions\UserRegisterAction;
+use App\Actions\UserSearchAction;
 use App\Contracts\Actions\AuthActionContract;
 use App\Contracts\Actions\EmailVerifyActionContract;
 use App\Contracts\Actions\SendVerificationLinkActionContract;
 use App\Contracts\Actions\ShowUserActionContract;
 use App\Contracts\Actions\UserRegisterActionContract;
+use App\Contracts\Actions\UserSearchActionContract;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -28,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EmailVerifyActionContract::class, EmailVerifyAction::class);
         $this->app->bind(SendVerificationLinkActionContract::class, SendVerificationLinkAction::class);
         $this->app->bind(ShowUserActionContract::class, ShowUserAction::class);
+        $this->app->bind(UserSearchActionContract::class, UserSearchAction::class);
 
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);

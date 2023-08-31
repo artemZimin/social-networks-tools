@@ -30,6 +30,7 @@ Route::prefix('v1')->group(function () {
             ->name('verification.send');
 
         Route::get('/user', [\App\Http\Controllers\UserController::class, 'show'])->name('user.show');
+        Route::post('/users/search', [\App\Http\Controllers\UserController::class, 'search'])->name('users.search');
     });
 
     Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\EmailVerificationController::class, 'verify'])
