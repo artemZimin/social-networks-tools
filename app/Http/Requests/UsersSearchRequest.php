@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Enums\TokenAbilities;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class UsersSearchRequest extends FormRequest
 {
@@ -18,7 +19,7 @@ class UsersSearchRequest extends FormRequest
         $user = $this->user();
 
         if ($user instanceof User) {
-            return $user->tokenCan(TokenAbilities::USERS_SEARCH->value);
+            return Gate::allows('search', $user);
         } else {
             return false;
         }

@@ -38,10 +38,9 @@ class AuthAction implements AuthActionContract
 
         $role = (string)$candidate->getAttribute('role');
 
-        $abilities = match ($role) {
-            UserRoles::ADMIN->value => TokenAbilities::cases(),
-            default => []
-        };
+        $makeTokenAbilities = new MakeTokenAbilitiesAction();
+
+        $abilities = $makeTokenAbilities->handle($role);
 
         return [
             'token' => $candidate->createToken($request->getClientIp(), $abilities)->plainTextToken,
