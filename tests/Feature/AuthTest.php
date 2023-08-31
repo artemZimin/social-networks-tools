@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Testing\TestResponse;
+use Tests\Feature\Traits\HasAuth;
 use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
     use DatabaseMigrations;
+    use HasAuth;
 
     /**
      * Auth
@@ -154,32 +155,6 @@ class AuthTest extends TestCase
             'errors' => [
                 'password'
             ]
-        ]);
-    }
-
-    /**
-     * Send register request
-     *
-     * @param array $data
-     * @return TestResponse
-     */
-    private function registerRequest(array $data): TestResponse
-    {
-        return $this->post(route('register'), $data, [
-            'Accept' => 'application/json'
-        ]);
-    }
-
-    /**
-     * Send auth request
-     *
-     * @param array $data
-     * @return TestResponse
-     */
-    private function authRequest(array $data): TestResponse
-    {
-        return $this->post(route('auth'), $data, [
-            'Accept' => 'application/json'
         ]);
     }
 }

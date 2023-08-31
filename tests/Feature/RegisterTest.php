@@ -6,12 +6,13 @@ namespace Tests\Feature;
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Support\Str;
-use Illuminate\Testing\TestResponse;
+use Tests\Feature\Traits\HasAuth;
 use Tests\TestCase;
 
 class RegisterTest extends TestCase
 {
     use DatabaseMigrations;
+    use HasAuth;
 
     /**
      * Register
@@ -243,19 +244,6 @@ class RegisterTest extends TestCase
             'errors' => [
                 'password',
             ]
-        ]);
-    }
-
-    /**
-     * Send register request
-     *
-     * @param array $data
-     * @return TestResponse
-     */
-    private function registerRequest(array $data): TestResponse
-    {
-        return $this->post(route('register'), $data, [
-            'Accept' => 'application/json'
         ]);
     }
 }
