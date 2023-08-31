@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Contracts\Actions\AuthActionContract;
+use App\Enums\TokenAbilities;
+use App\Enums\UserRoles;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -34,8 +36,15 @@ class AuthAction implements AuthActionContract
             ]);
         }
 
+        $role = (string)$candidate->getAttribute('role');
+
+        $abilities = match ($role) {
+            UserRoles::ADMIN->value => TokenAbilities::cases(),
+            default => []
+        };
+
         return [
-            'token' => $candidate->createToken($request->getClientIp())->plainTextToken,
+            'token' => $candidate->createToken($request->getClientIp(), $abilities)->plainTextToken,
         ];
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Enums\TokenAbilities;
+use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UsersSearchRequest extends FormRequest
@@ -13,7 +15,13 @@ class UsersSearchRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        $user = $this->user();
+
+        if ($user instanceof User) {
+            return $user->tokenCan(TokenAbilities::USERS_SEARCH->value);
+        } else {
+            return false;
+        }
     }
 
     /**
