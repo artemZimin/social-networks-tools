@@ -33,4 +33,22 @@ trait HasAuth
             'Accept' => 'application/json'
         ]);
     }
+
+    /**
+     * Register, auth and get token
+     *
+     * @param array $data user data
+     * @return string user token
+     */
+    private function registerAndAuth(array $data): string
+    {
+        $response = $this->registerRequest($data);
+
+        $response = $this->authRequest([
+            'email' => $data['email'],
+            'password' => $data['password'],
+        ]);
+
+        return json_decode($response->getContent())->token;
+    }
 }

@@ -20,11 +20,17 @@ class UserRegisterAction implements UserRegisterActionContract
     {
         $password = Hash::make($request->input('password'));
 
-        $user = User::query()->create([
+        $data = [
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => $password,
-        ]);
+        ];
+
+        if (!User::query()->count()) {
+            $data['role'] = 'admin';
+        }
+
+        $user = User::query()->create($data);
 
         if ($user instanceof User) {
             ProcessUserRegistered::dispatch($user);

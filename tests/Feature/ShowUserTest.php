@@ -18,18 +18,11 @@ class ShowUserTest extends TestCase
      */
     public function test_user_show_with_authorize(): void
     {
-        $response = $this->registerRequest([
+        $token = $this->registerAndAuth([
             'name' => 'test',
             'email' => 'test@test.test',
             'password' => 'testtest',
         ]);
-
-        $response = $this->authRequest([
-            'email' => 'test@test.test',
-            'password' => 'testtest',
-        ]);
-
-        $token = json_decode($response->getContent())->token;
 
         $response = $this->get('/api/v1/user', [
             'Authorization' => 'Bearer ' . $token,

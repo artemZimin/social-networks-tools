@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Actions;
 
 use App\Contracts\Actions\AuthActionContract;
-use App\Enums\TokenAbilities;
-use App\Enums\UserRoles;
 use App\Http\Requests\AuthRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
