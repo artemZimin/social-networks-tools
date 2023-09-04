@@ -6,16 +6,20 @@ namespace App\Providers;
 
 use App\Actions\AuthAction;
 use App\Actions\EmailVerifyAction;
+use App\Actions\SaveVkAccessTokenAction;
 use App\Actions\SendVerificationLinkAction;
 use App\Actions\ShowUserAction;
 use App\Actions\UserRegisterAction;
 use App\Actions\UserSearchAction;
 use App\Contracts\Actions\AuthActionContract;
 use App\Contracts\Actions\EmailVerifyActionContract;
+use App\Contracts\Actions\SaveVkAccessTokenActionContract;
 use App\Contracts\Actions\SendVerificationLinkActionContract;
 use App\Contracts\Actions\ShowUserActionContract;
 use App\Contracts\Actions\UserRegisterActionContract;
 use App\Contracts\Actions\UserSearchActionContract;
+use App\Contracts\Services\VkAuthServiceContract;
+use App\Services\VK\VkAuthService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -31,6 +35,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(SendVerificationLinkActionContract::class, SendVerificationLinkAction::class);
         $this->app->bind(ShowUserActionContract::class, ShowUserAction::class);
         $this->app->bind(UserSearchActionContract::class, UserSearchAction::class);
+        $this->app->bind(SaveVkAccessTokenActionContract::class, SaveVkAccessTokenAction::class);
+        $this->app->bind(VkAuthServiceContract::class, VkAuthService::class);
 
         if ($this->app->environment('local')) {
             $this->app->register(\Laravel\Telescope\TelescopeServiceProvider::class);

@@ -18,3 +18,11 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::prefix('vk')->group(function () {
+    Route::middleware(['check-token-and-add-to-header', 'auth:sanctum'])->group(function () {
+        Route::get('/auth', [\App\Http\Controllers\VkAuthController::class, 'index'])->name('vk.auth');
+    });
+
+    Route::get('/code', [\App\Http\Controllers\VkAuthController::class, 'code'])->name('vk.code');
+});

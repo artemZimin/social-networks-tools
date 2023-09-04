@@ -66,6 +66,12 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'auth-for-email' => \App\Http\Middleware\AuthForEmailVerify::class
+        'auth-for-email' => \App\Http\Middleware\AuthForEmailVerify::class,
+        'check-token-and-add-to-header' => \App\Http\Middleware\CheckTokenAndAddToHeaderMiddleware::class,
+    ];
+
+    protected $middlewarePriority = [
+        \App\Http\Middleware\CheckTokenAndAddToHeaderMiddleware::class,
+        \App\Http\Middleware\Authenticate::class,
     ];
 }
